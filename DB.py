@@ -45,6 +45,9 @@ class DBWriter:
             return False;
             
 
+    def update_cluster(self, id, data) :
+
+
 
 
 class CommandHandler:
@@ -58,16 +61,13 @@ class CommandHandler:
 
         command = incomming_data["command"];
 
-
-
         if(command == "Get"):
            return self.db_writer.get_cluster() 
 
         elif(command == "Set"):
-            return self.db_writer.set
+            return self.db_writer.set_cluster(incomming_data["argc"][0])
         elif(command == "Update"):
-
-
+            return self.db_writer.update_cluster(incomming_data["argc"][0], incomming_data["argc"][1]);
         else:
             print("Not a command in the the database.");
 
