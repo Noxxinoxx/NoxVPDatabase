@@ -1,5 +1,7 @@
 import socket
-from DB import DBWriter;
+from DB import CommandHandler
+from DB import DBWriter
+
 #This is the main obj for the connection between the database and the client.
 class DatabaseServer: 
     def __init__(self, address, port) :
@@ -18,11 +20,6 @@ class DatabaseServer:
             
             #data will be in the for of a string.
             data = c.recv(1024).decode(); 
-
-            
-
-
-
             c.close();
     
 

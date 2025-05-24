@@ -13,6 +13,15 @@ class DBWriter:
         self.cluster = "";
         self.schema = None;
 
+    def set_cluster(self, cluster_name) :
+        self.cluster = cluster_name
+        if self.is_cluster_defined():
+            self.cluster = "";
+            return None;
+        else:
+            return self.cluster;
+
+
     def get_cluster(self):
         if self.is_cluster_defined():
             return None;
@@ -44,7 +53,23 @@ class CommandHandler:
 
     #will handle the data that is incomming will have a {command : !command, argc : !args}; 
     def handler(self,incomming_data):
-        print("hello command"); 
+        
+        incomming_data = json.loads(incomming_data)
+
+        command = incomming_data["command"];
+
+
+
+        if(command == "Get"):
+           return self.db_writer.get_cluster() 
+
+        elif(command == "Set"):
+            return self.db_writer.set
+        elif(command == "Update"):
+
+
+        else:
+            print("Not a command in the the database.");
 
 #mabye define own schemas but that will mabye undermind the hole project tobe easy and dynmic.
 class Schema:
