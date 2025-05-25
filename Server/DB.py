@@ -15,7 +15,7 @@ class DBWriter:
 
     def set_cluster(self, cluster_name) :
         self.cluster = cluster_name
-        if not self.is_cluster_defined():
+        if not self.is_cluster_defined(self.cluster):
             self.cluster = "";
             return None;
         else:
@@ -23,7 +23,7 @@ class DBWriter:
 
 
     def get_cluster(self):
-        if not self.is_cluster_defined():
+        if not self.is_cluster_defined(self.cluster):
             return None;
         
         #get the cluster that is defined
@@ -49,15 +49,15 @@ class DBWriter:
 
         
 
-    def is_cluster_defined(self): #returns None if not defined or the full path if defined.
-        if(os.path.isfile(self.database_path + self.cluster)):
+    def is_cluster_defined(self, cluster_name): #returns None if not defined or the full path if defined.
+        if(os.path.isfile(self.database_path + cluster_name)):
             return True;
         else :
             return False;
             
 
     def update_cluster(self, id, data) :
-        if not self.is_cluster_defined() : 
+        if not self.is_cluster_defined(self.cluster) : 
             return None;
 
         cluster_data = self.read_file(self.cluster) ;
@@ -71,7 +71,22 @@ class DBWriter:
                 return obj;
         return None;
 
+    def create_cluster(self, data): 
+        if self.is_cluster_defined(data[0]):
+            return None;
 
+        self.set_cluster(data[0]);
+
+        file = open(self.database_path + self.cluster, "w+");
+
+        file.write("[]");
+
+        return True;
+
+    def add_cluster(self, data):
+        if not self.is_cluster_defined(self.cluster): 
+            return None;
+        
 
 
 
