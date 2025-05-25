@@ -9,7 +9,7 @@ import json
 
 class DBWriter: 
     def __init__(self):
-        self.database_path = "./Database/";
+        self.database_path = "../Database/";
         self.cluster = "";
         self.schema = None;
 
@@ -74,21 +74,46 @@ class DBWriter:
     def create_cluster(self, data): 
         if self.is_cluster_defined(data[0]):
             return None;
-
-        self.set_cluster(data[0]);
-
-        file = open(self.database_path + self.cluster, "w+");
+         
+        file = open(self.database_path + data[0], "w");
 
         file.write("[]");
+
+        self.set_cluster(data[0]);
 
         return True;
 
     def add_cluster(self, data):
         if not self.is_cluster_defined(self.cluster): 
             return None;
+       
+        new_id = self.get_last_id() + 1;
+
+        json_data = {"id" : new_id, "data" : data};
+
+        self.append_file(json_data);
         
+    def get_last_id(self):
+        
+        
+        cluster_data = self.get_cluster();
+        
+        print("cluster data " + cluster_data)
 
+        try:
+            return cluster_data[-1]["id"];
+        except IndexError as err:  
+            print("undefined index for id");
+            return None;
+    
 
+    def append_file(self, data): 
+        cluster_data = self.read_file(self.cluster) ;
+
+        cluster_data.append(data)
+
+        self.write_file(self.cluster, cluster_data);
+        
 
 
 class CommandHandler:
@@ -108,6 +133,11 @@ class CommandHandler:
             return self.db_writer.set_cluster(incomming_data["argc"][0])
         elif(command == "Update"):
             return self.db_writer.update_cluster(incomming_data["argc"][0], incomming_data["argc"][1]);
+        elif(command == "Create"):
+            return self.db_writer.create_cluster(incomming_data["argc"]);
+        elif(command == "Add"):
+            return self.db_writer.add_cluster(incomming_data["argc"]);
+
         else:
             print("Not a command in the the database.");
 

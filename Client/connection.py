@@ -36,7 +36,10 @@ time.sleep(2)
 send_command("Get", ["test.json"])
 time.sleep(2)
 send_command("Update", [0, {"Name" : "Anders", "Age" : 20}]);
-
+time.sleep(2)
+send_command("Create", ["test_cluster.json"]);
+time.sleep(2)
+send_command("Add", [{"Name" : "ABnders", "Age" : 20}])
 
 
 
