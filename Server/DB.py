@@ -161,6 +161,14 @@ class DBWriter:
         return cluster_data;
 
 
+    def delete_cluster(self):
+        if not self.is_cluster_defined(self.cluster):
+            return None;
+
+        os.remove(self.database_path + self.cluster);
+
+        return True;
+
 
 
 class CommandHandler:
@@ -186,6 +194,8 @@ class CommandHandler:
             return self.db_writer.add_cluster(incomming_data["argc"]);
         elif(command == "Remove"):
             return self.db_writer.remove_item(incomming_data["argc"][0]);
+        elif(command == "Delete"):
+            return self.db_writer.delete_cluster();
         else:
             print("Not a command in the the database.");
 

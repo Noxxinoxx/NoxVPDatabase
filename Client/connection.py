@@ -50,5 +50,6 @@ time.sleep(2)
 send_command("Remove", [5])
 time.sleep(2)
 send_command("Add", [{"Added" : "Added you last in the database good job it worked!"}])
-#remove
+time.sleep(2)
+send_command("Delete", ["test_cluster.json"]);
 #delete_cluster
