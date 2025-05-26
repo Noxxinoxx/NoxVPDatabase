@@ -98,13 +98,16 @@ class DBWriter:
         
         cluster_data = self.get_cluster();
         
-        print("cluster data " + cluster_data)
+        print("cluster data : ")
+        print(cluster_data)
+            
+        
 
-        try:
+
+        if(len(cluster_data) == 0 or cluster_data[-1]["id"] == None):
+            return 0;
+        else : 
             return cluster_data[-1]["id"];
-        except IndexError as err:  
-            print("undefined index for id");
-            return None;
     
 
     def append_file(self, data): 
