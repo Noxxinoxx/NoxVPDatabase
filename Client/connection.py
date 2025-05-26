@@ -1,3 +1,9 @@
+#Test client script.
+#made to test all the parts of the database.
+#Tests : Set, Get, Update, Create, Remove, Delete.
+
+
+
 import socket
 import sys
 import json
@@ -41,8 +47,8 @@ send_command("Create", ["test_cluster.json"]);
 time.sleep(2)
 send_command("Set", ["test_cluster.json"]);
 time.sleep(2)
-#send_command("Add", [{"Name" : "ABnders", "Age" : 20}])
-#time.sleep(2)
+send_command("Add", [{"Name" : "ABnders", "Age" : 20}])
+time.sleep(2)
 send_command("Update", [2, {"PASSWORD" : "Will be removed"}])
 time.sleep(2)
 send_command("Update", [5, {"PASSWORD" : "You will be id 2 after remove!"}])
@@ -52,4 +58,4 @@ time.sleep(2)
 send_command("Add", [{"Added" : "Added you last in the database good job it worked!"}])
 time.sleep(2)
 send_command("Delete", ["test_cluster.json"]);
-#delete_cluster
+
