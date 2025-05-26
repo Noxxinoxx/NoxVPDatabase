@@ -73,6 +73,7 @@ class DBWriter:
 
     def create_cluster(self, data): 
         if self.is_cluster_defined(data[0]):
+            self.set_cluster("");
             return None;
          
         file = open(self.database_path + data[0], "w");
@@ -95,15 +96,8 @@ class DBWriter:
         
     def get_last_id(self):
         
-        
         cluster_data = self.get_cluster();
-        
-        print("cluster data : ")
-        print(cluster_data)
-            
-        
-
-
+         
         if(len(cluster_data) == 0 or cluster_data[-1]["id"] == None):
             return 0;
         else : 
@@ -116,7 +110,57 @@ class DBWriter:
         cluster_data.append(data)
 
         self.write_file(self.cluster, cluster_data);
+    
+
+    def get_item_from_id(self, id):
+    
+        cluster_data = self.get_cluster();
+
+        for item in cluster_data: 
+            if(item["id"] == id):
+                return item;
+
+        return None;
+
+    def remove_item(self, id):
+        #will remove an item with id.
         
+        if not self.is_cluster_defined(self.cluster):
+            return None;
+
+        cluster_data = self.get_cluster();
+
+        item = self.get_item_from_id(id);
+        
+        if(item == None):
+            return None;
+
+        cluster_data.remove(item);
+
+        updated_cluster = self.move_id_in_cluster(cluster_data);
+
+        self.write_file(self.cluster, updated_cluster);
+    
+    def move_id_in_cluster(self,current_cluster_data): 
+        #this will update all other ids when an cluster item is removed.
+        #takes current_cluster_data so I dont need to append twise.
+        #I will use recount for this I think.
+        
+        return self.recount_algo(current_cluster_data);
+        
+    
+    def recount_algo(self, cluster_data):
+        #this will recount the hole cluster if an primary key is removed aka id.
+        
+        id = 1;
+        
+        for item in cluster_data:
+            item["id"] = id;
+            id += 1;
+
+        return cluster_data;
+
+
 
 
 class CommandHandler:
@@ -140,7 +184,8 @@ class CommandHandler:
             return self.db_writer.create_cluster(incomming_data["argc"]);
         elif(command == "Add"):
             return self.db_writer.add_cluster(incomming_data["argc"]);
-
+        elif(command == "Remove"):
+            return self.db_writer.remove_item(incomming_data["argc"][0]);
         else:
             print("Not a command in the the database.");
 
