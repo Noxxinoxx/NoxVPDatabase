@@ -25,8 +25,12 @@ class DatabaseServer:
             #data will be in the for of a string.
             data = c.recv(1024).decode(); 
             
-            print(self.command_handler.handler(data));
-            print("cluster : " + self.command_handler.db_writer.cluster);
+            #print("Command : " + data + " Result: " + str(self.command_handler.handler(data)));
+            #print("cluster : " + self.command_handler.db_writer.cluster);
+            
+            result = str(self.command_handler.handler(data));
+
+            c.sendall(result.encode());
 
             c.close();
     
