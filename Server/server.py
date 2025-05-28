@@ -32,6 +32,5 @@ class DatabaseServer:
 
             c.sendall(result.encode());
 
-            c.close();
-    
+            c.close(); 
 

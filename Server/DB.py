@@ -182,6 +182,11 @@ class CommandHandler:
 
         command = incomming_data["command"];
 
+        print("Command : " + command)
+        print("all Data : " + str(incomming_data));
+
+
+
         if(command == "Get"):
             return self.db_writer.get_cluster() 
         elif(command == "Set"):
