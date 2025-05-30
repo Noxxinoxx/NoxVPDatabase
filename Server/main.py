@@ -5,7 +5,7 @@ from server import DatabaseServer;
 def main() :
 
 
-    server = DatabaseServer("localhost", 3001);
+    server = DatabaseServer("0.0.0.0", 5000);
 
 
     print("server is staring!");

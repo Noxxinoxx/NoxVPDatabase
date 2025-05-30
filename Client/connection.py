@@ -19,7 +19,7 @@ def send_command(Command,data):
         print(err)
         sys.exit();
 
-    port = 3001
+    port = 5000 
     address = "localhost"
 
 
