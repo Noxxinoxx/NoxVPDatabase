@@ -30,7 +30,7 @@ class DatabaseServer:
             
             result = str(self.command_handler.handler(data));
 
-            c.sendall(result.encode());
+            c.sendall((result + '\n').encode());
 
             c.close(); 
 
