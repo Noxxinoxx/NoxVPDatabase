@@ -20,7 +20,7 @@ def send_command(Command,data):
         sys.exit();
 
     port = 5000 
-    address = "localhost"
+    address = "192.168.2.204"
 
 
     json_data = {"command" : Command, "argc" : data}
